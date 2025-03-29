@@ -1,0 +1,2 @@
+C:/Users/Reno/Downloads/Clone Repo/katarah/android/app/.cxx/Debug/6k282h40/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/Reno/Downloads/Clone Repo/katarah/android/app/.cxx/Debug/6k282h40/armeabi-v7a/CMakeFiles/rebuild_cache.dir

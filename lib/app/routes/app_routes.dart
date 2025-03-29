@@ -8,6 +8,7 @@ abstract class Routes {
   static const UPLOAD = _Paths.UPLOAD;
   static const LOGIN = _Paths.LOGIN;
   static const SETTINGS = _Paths.SETTINGS;
+  static const VIDEOPLAYER = _Paths.VIDEOPLAYER;
 }
 
 abstract class _Paths {
@@ -17,4 +18,5 @@ abstract class _Paths {
   static const UPLOAD = '/upload';
   static const LOGIN = '/login';
   static const SETTINGS = '/settings';
+  static const VIDEOPLAYER = '/videoplayer';
 }
