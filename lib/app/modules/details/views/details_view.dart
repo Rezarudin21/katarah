@@ -1,8 +1,7 @@
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:katarahv2/app/routes/app_pages.dart';
-
+import 'package:carousel_slider/carousel_slider.dart';
 import '../controllers/details_controller.dart';
 
 class DetailsView extends GetView<DetailsController> {
@@ -21,52 +20,74 @@ class DetailsView extends GetView<DetailsController> {
       ),
       body: SafeArea(
         child: Column(
-          crossAxisAlignment:
-              CrossAxisAlignment.start, // Agar konten Column rata kiri
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20),
-            Container(
-              child: Column(
-                children: [Text('Judul'), Text('Lokasi')],
-              ),
-            ),
-            // Container untuk detail produk
+            // Carousel Image
             Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: 16), // Beri jarak di kiri & kanan
-              child: DottedBorder(
-                color: Colors.black,
-                strokeWidth: 1.5,
-                dashPattern: [6, 4],
-                borderType: BorderType.RRect,
-                radius: Radius.circular(8),
-                child: Container(
-                  padding: EdgeInsets.all(12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Ini adalah deskripsi singkat tentang produk yang sedang ditampilkan.',
-                        style: TextStyle(fontSize: 14),
-                      ),
-                    ],
-                  ),
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: CarouselSlider.builder(
+                itemCount: controller.imageList.length,
+                itemBuilder: (context, index, realIndex) {
+                  return Image.asset(controller.imageList[index]);
+                },
+                options: CarouselOptions(
+                  autoPlay: true,
+                  enlargeCenterPage: true,
+                  aspectRatio: 2.0,
+                  viewportFraction: 0.8,
                 ),
               ),
             ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              child: Column(
+                children: [
+                  Text('Judul'),
+                  Text('Lokasi'),
+                ],
+              ),
+            ),
+            // Container for product details
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Container(
+                padding: EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 1.5),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Ini adalah deskripsi singkat tentang produk yang sedang ditampilkan.',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            // Buttons
             Container(
               child: Row(
                 children: [
-                  ElevatedButton(onPressed: () {}, child: Text('Video')),
+                  ElevatedButton(
+                    onPressed: () {
+                      Get.toNamed(Routes.VIDEOPLAYER);
+                    },
+                    child: Text('Video'),
+                  ),
                   ElevatedButton(
                     onPressed: () {
                       // Ganti halaman tanpa menumpuk navigator
                     },
                     child: Text('Selengkapnya'),
-                  )
+                  ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

@@ -1,129 +1,122 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:carousel_slider/carousel_slider.dart'; // Import carousel slider package
+import '../../../routes/app_pages.dart';
 import '../controllers/home_controller.dart';
-import 'package:katarahv2/app/routes/app_pages.dart';
 
-class HomeView extends GetView<HomeController> {
+class HomeView extends StatelessWidget {
   HomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // Accessing the controller
+    final HomeController controller = Get.put(HomeController());
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          leading: Image(image: AssetImage('assets/logo.jpg')),
+          leading: Image(image: AssetImage('assets/download.jpeg')),
           actions: [
             IconButton(
-                onPressed: () {
-                  Get.toNamed(Routes.SETTINGS);
-                },
-                icon: Icon(Icons.settings))
+              onPressed: () {
+                // Ganti dengan aksi yang sesuai jika diperlukan
+                Get.toNamed(Routes.SETTINGS);
+              },
+              icon: Icon(Icons.settings),
+            ),
           ],
         ),
         body: SingleChildScrollView(
           child: Column(
             children: [
-              /// **Carousel**
-              CarouselSlider.builder(
-                itemCount: controller.images.length,
-                options: CarouselOptions(
-                  autoPlay: true,
-                  aspectRatio: 2.0,
-                  enlargeCenterPage: true,
-                ),
-                itemBuilder: (context, index, realIdx) {
-                  return Center(
-                    child: Image.asset(
-                      controller.images[index],
-                      fit: BoxFit.cover,
+              // Carousel Section
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Obx(() {
+                  // Using Obx to listen for changes to the images list
+                  return CarouselSlider.builder(
+                    itemCount: controller.images.length,
+                    itemBuilder: (context, index, realIndex) {
+                      return Image.asset(
+                        controller.images[
+                            index], // Accessing images from the controller
+                        fit: BoxFit.cover,
+                        width: MediaQuery.of(context)
+                            .size
+                            .width, // Full width for carousel
+                      );
+                    },
+                    options: CarouselOptions(
+                      autoPlay: true,
+                      enlargeCenterPage: true,
+                      aspectRatio: 2.0,
+                      viewportFraction:
+                          1.0, // Makes the images take the whole width
                     ),
                   );
-                },
+                }),
               ),
 
-              SizedBox(height: 20), // Jarak antara carousel dan cards
+              SizedBox(height: 20), // Jarak antara carousel dan card
 
-              /// **Grid Cards**
+              // Card Section
               SizedBox(
-                width: double.infinity,
-                child: Wrap(
-                  spacing: 10, // Jarak horizontal antar Card
-                  runSpacing: 40, // Jarak vertikal antar Card
-                  alignment: WrapAlignment.center, // Posisikan Card ke tengah
-                  children: controller.cards.map((card) {
-                    return SizedBox(
-                      width: (MediaQuery.of(context).size.width / 2) -
-                          25, // 2 card per baris
-                      child: Card(
-                        color: Colors.white,
-                        elevation: 0,
-                        child: Column(
-                          children: [
-                            /// **Gambar dalam Card**
-                            Container(
-                              decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color.fromARGB(30, 0, 0, 0),
-                                    blurRadius: 5,
-                                    spreadRadius: 1,
-                                  )
-                                ],
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(30),
-                                child: Image.asset(
-                                  card["image"]!,
-                                  width: 200,
-                                  height: 200,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-
-                            SizedBox(height: 20),
-
-                            /// **Tombol Lihat**
-                            ElevatedButton(
-                              onPressed: () {
-                                Get.toNamed(Routes.DETAILS);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.cyan,
-                                fixedSize: Size(150, 30),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                ),
-                              ),
-                              child: Text(
-                                'Lihat',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-
-                            SizedBox(height: 20),
-
-                            /// **Judul**
-                            Text(
-                              card["title"]!,
-                              style:
-                                  TextStyle(fontSize: 17, color: Colors.cyan),
-                              textAlign: TextAlign.center,
-                              maxLines: 4,
-                              overflow: TextOverflow.ellipsis,
+                width: 200,
+                child: Card(
+                  shadowColor: Colors.transparent,
+                  color: Colors.transparent,
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color.fromARGB(143, 0, 0, 0),
+                              blurRadius: 5,
+                              spreadRadius: 1,
                             ),
                           ],
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(30),
+                          child: Image.asset(
+                            'assets/download.jpeg', // Gambar dalam card
+                            width: 200,
+                            height: 200,
+                            fit: BoxFit.fill,
+                          ),
                         ),
                       ),
-                    );
-                  }).toList(),
+                      SizedBox(height: 20),
+                      ElevatedButton(
+                          onPressed: () {
+                            Get.toNamed(Routes.DETAILS);
+                          },
+                          child: Text('Lihat')),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      // Title for Card
+                      Text(
+                        'Card Title',
+                        style: TextStyle(
+                          fontSize: 17,
+                          color: Colors.cyan,
+                        ),
+                        textAlign: TextAlign.center,
+                        maxLines: 4,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

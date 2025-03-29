@@ -3,6 +3,7 @@ import 'package:katarahv2/app/modules/details/views/details_view.dart';
 import 'package:katarahv2/app/modules/login/views/login_view.dart';
 import 'package:katarahv2/app/modules/settings/views/settings_view.dart';
 import 'package:katarahv2/app/modules/upload/views/upload_view.dart';
+import 'package:katarahv2/app/modules/videoplayer/views/videoplayer_view.dart';
 
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
@@ -35,6 +36,10 @@ class AppPages {
     GetPage(
       name: _Paths.SETTINGS,
       page: () => SettingsView(),
+    ),
+    GetPage(
+      name: _Paths.VIDEOPLAYER,
+      page: () => VideoPlayerView(),
     ),
   ];
 }
